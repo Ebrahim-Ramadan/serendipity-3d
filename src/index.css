@@ -18,3 +18,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.alegreya-ass {
+  font-family: "Alegreya", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+}

@@ -1,13 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import debounce from 'lodash/debounce';
-import { Search } from 'lucide-react';
 
-interface DebouncedSearchProps {
-  onSearchResult: (result: string) => void;
-}
 
-export const DebouncedSearch: React.FC<DebouncedSearchProps> = ({ onSearchResult }) => {
+
+export const DebouncedSearch: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const fetchData = async (prompt: string) => {
@@ -45,25 +42,32 @@ export const DebouncedSearch: React.FC<DebouncedSearchProps> = ({ onSearchResult
     debouncedSearch(e.target.value);
   };
 
-  React.useEffect(() => {
-    if (data) {
-      // console.log('data', data);
-      
-      onSearchResult(JSON.stringify(data));
-    }
-  }, [data, onSearchResult]);
+ 
 
   return (
-    <div className="relative w-full border">
+    <div className="relative w-full max-w-md">
       <input
         type="text"
-        placeholder="Search Tripo3D..."
+        placeholder="Type A Keyword..."
         onChange={handleInputChange}
         className="w-full rounded-lg border px-4 py-2 text-sm text-black placeholder:text-neutral-500 border-neutral-800 bg-transparent text-white placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
       />
       {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} /> */}
       {isLoading && <p className="mt-2 text-gray-600">Loading...</p>}
       {error && <p className="mt-2 text-red-500">Error: {(error as Error).message}</p>}
+      <div className="overflow-x-auto whitespace-nowrap mt-2">
+      <div className="flex space-x-4">
+      {/* @ts-ignore  */}
+        {data?.payload.map((result) => (
+          <img
+            key={result.id}
+            className="w-56 my-4 h-auto border border-neutral-900 hover:bg-neutral-950 rounded-xl"
+            src={result.thumbnail_url}
+            alt={`Thumbnail for task ${result.task_id}`}
+          />
+        ))}
+      </div>
+    </div>
     </div>
   );
 };
