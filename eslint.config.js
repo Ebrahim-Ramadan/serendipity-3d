@@ -4,6 +4,8 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 export default tseslint.config(
   { ignores: ['dist'] },
   {
@@ -23,6 +25,8 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      // Add the rule to disable console.logs in production
+      'no-console': isProduction ? 'error' : 'warn', // Error in production, warning in development
     },
   },
 )

@@ -1,29 +1,52 @@
-import  { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
 import DebouncedSearch from './components/DebouncedSearch';
+
+interface PayloadItem {
+  id: number;
+  task_id: string;
+  thumbnail_url: string;
+  glb_url: string | null;
+  draft_model_id: string | null;
+  prompt: string;
+  type: string;
+}
+
+interface TrivaloResponse {
+  message: string;
+  code: number;
+  payload: PayloadItem[];
+}
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [searchResult, setSearchResult] = useState<string | null>(null);
+  // Initialize searchResult as null since we don't have data initially
+  const [searchResult, setSearchResult] = useState<TrivaloResponse | null>(null);
 
-  const handleSearchResult = useCallback((result: string) => {
+  const handleSearchResult = useCallback((result: TrivaloResponse) => {
+    console.log('API result:', result);
     setSearchResult(result);
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-        <h1 className="text-3xl font-bold mb-8">Tripo3D Search</h1>
-        <div className="w-full max-w-md">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+        <div className="w-full flex flex-col justify-center h-full">
           <DebouncedSearch onSearchResult={handleSearchResult} />
-          {searchResult && (
-            <div className="mt-4 p-4 bg-white rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-2">Search Result:</h2>
-              <p>{searchResult}</p>
-            </div>
-          )}
+          {/* Check if searchResult is not null, has a valid payload, and success message */}
+          {/* @ts-ignore */}
+          {searchResult?.payload.length > 0 && searchResult.message === 'success' &&
+          // @ts-ignore 
+            searchResult.payload.map((result) => (
+              <img
+                key={result.id}
+                className="w-full border"
+                src={result.thumbnail_url}
+                alt={`Thumbnail for task ${result.task_id}`}
+              />
+            ))
+          }
         </div>
       </div>
     </QueryClientProvider>

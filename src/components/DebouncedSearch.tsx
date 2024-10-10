@@ -10,9 +10,20 @@ interface DebouncedSearchProps {
 export const DebouncedSearch: React.FC<DebouncedSearchProps> = ({ onSearchResult }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchData = async (term: string) => {
-    if (!term) return null;
-    const response = await fetch(`https://www.tripo3d.ai/app?search=${encodeURIComponent(term)}`);
+  const fetchData = async (prompt: string) => {
+    if (!prompt) return null;
+    const params = new URLSearchParams({
+      prompt,
+      type:'text_to_model',
+      limit: '24'
+    });
+    const response = await fetch(`${import.meta.env.VITE_TRIVO_API_URL}?${params}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_TRIVO_TOKEN}`,
+        'Accept': 'application/json'
+      }
+    });
     
     return response.json();
   };
@@ -36,21 +47,21 @@ export const DebouncedSearch: React.FC<DebouncedSearchProps> = ({ onSearchResult
 
   React.useEffect(() => {
     if (data) {
-      console.log('data', data);
+      // console.log('data', data);
       
       onSearchResult(JSON.stringify(data));
     }
   }, [data, onSearchResult]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full border">
       <input
         type="text"
         placeholder="Search Tripo3D..."
         onChange={handleInputChange}
-        className="w-full p-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full rounded-lg border px-4 py-2 text-sm text-black placeholder:text-neutral-500 border-neutral-800 bg-transparent text-white placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
       />
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+      {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} /> */}
       {isLoading && <p className="mt-2 text-gray-600">Loading...</p>}
       {error && <p className="mt-2 text-red-500">Error: {(error as Error).message}</p>}
     </div>
