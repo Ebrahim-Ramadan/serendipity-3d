@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import DebouncedSearch from './components/DebouncedSearch';
 import { Credits } from './components/Credits';
