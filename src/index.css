@@ -8,7 +8,9 @@
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -19,6 +21,24 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
+/* width */
+::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  height: 0;
+  border-radius: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  height: 0;
+  border-radius: 0;
+}
 .alegreya-ass {
   font-family: "Alegreya", serif;
   font-optical-sizing: auto;
