@@ -123,14 +123,15 @@ export default function DebouncedSearch() {
           src={result.thumbnail_url}
           alt={`Thumbnail for task ${result.task_id}`}
         />
-        <button>
+        <button className='flex p-2 absolute right-1 top-1 text-neutral-500 hover:text-neutral-400 bg-neutral-900 rounded-xl hover:bg-neutral-800'
+        onClick={() => {
+          copyToClipboard(result.thumbnail_url)
+          toast.success('Image Copied to clipboard!')
+        }}>
           <Copy
-            className="absolute right-2 top-2 text-neutral-500 hover:text-neutral-400"
+            className=""
             size={16}
-            onClick={() => {
-              copyToClipboard(result.thumbnail_url)
-              toast.success('Image Copied to clipboard!')
-            }}
+            
           />
         </button>
       </div>
@@ -138,24 +139,30 @@ export default function DebouncedSearch() {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-2 md:py-24 py-12 sm:px-6 lg:px-8 z-0">
-      <div className="relative mb-4">
+    <div className="w-full max-w-7xl mx-auto  md:py-24 py-12 sm:px-6 lg:px-8 z-0">
+      <div className='sticky top-14 fixed z-50 bg-neutral-950 mt-6'>
+      <div className="relative mb-4 ">
         <input
           type="text"
-          placeholder="Type a keyword..."
+          autoFocus
+          placeholder="Start Typing a keyword..."
           value={searchTerm}  
           onChange={handleInputChange}
-          className="w-full rounded-lg border px-10 py-2 text-sm text-white placeholder:text-neutral-500 border-neutral-800 bg-transparent focus:border-neutral-400 focus:outline-none"
+          className="w-full rounded-lg border-2 px-10 py-2 text-sm text-white placeholder:text-neutral-500 border-neutral-800 focus:border-neutral-500 focus:outline-none bg-neutral-900 backdrop-blur-3xl"
         />
 {searchTerm.trim().length>0 &&
-        <X
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-500 hover:text-neutral-400"
+       <button
+       onClick={handleClearSearch} 
+       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-300 p-2"
+       >
+         <X
         size={16}
-        onClick={handleClearSearch} 
       />
+       </button>
 }
 
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500" size={20} />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-300" size={20} />
+      </div>
       </div>
 
       {error && <p className="text-red-500 mb-4">Error: {(error as Error).message}</p>}

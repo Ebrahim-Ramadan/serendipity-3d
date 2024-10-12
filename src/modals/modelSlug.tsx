@@ -63,7 +63,9 @@ export const ModelSlug = () => {
   });
 
   if (isLoading) {
-    return <LoadingDots />;
+    return <div className='min-h-screen inset-0 absolute top-0 left-0 flex flex-col bg-black/50 items-center justify-center w-full'>
+    <LoadingDots/>
+                    </div>;
   }
 
   if (error) {
@@ -78,7 +80,7 @@ export const ModelSlug = () => {
             <div
               className={`fixed inset-0 bg-gradient-to-b from-black/50 to-black ${isOpen ? 'animate-fadeIn' : 'animate-fadeOut'}`}
               aria-hidden="true"
-              onClick={() => startTransition(() => setIsOpen(false))}
+              onClick={handleClick}
             />
 
             <div className={`relative overflow-y-auto h-auto md:max-h-[90vh] max-h-[80vh] w-full md:max-w-3xl bg-blue-100/20 backdrop-blur-3xl grid gap-8 max-w-7xl mx-auto rounded-3xl border-2 border-neutral-500 ${isOpen ? 'animate-fadeIn' : 'animate-fadeOut'}`}>
