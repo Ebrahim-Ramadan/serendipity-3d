@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce'
 import { Copy, Search, X } from 'lucide-react'
 import { copyToClipboard } from '~/utils'
 import { toast } from 'sonner'
-
+import { useLocation, useNavigate } from 'react-router-dom';
 interface ImageResult {
   id: number
   thumbnail_url: string
@@ -27,6 +27,19 @@ const ImageSkeleton: React.FC = () => (
 )
 
 export default function DebouncedSearch() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleClick = ({task_id}: {task_id: string}) => {
+    const params = new URLSearchParams(location.search);
+    params.set('task_id', task_id); // Set the 'q' parameter
+
+    navigate({
+      pathname: location.pathname,
+      search: params.toString(), // Update the query params in the URL
+    });
+  };
+
+
   const [searchTerm, setSearchTerm] = useState('') 
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('') 
   const [isInitialLoad, setIsInitialLoad] = useState(true)
@@ -103,6 +116,9 @@ export default function DebouncedSearch() {
     return (data?.payload || []).map((result) => (
       <div className='flex relative w-full h-full border border-neutral-900 bg-neutral-950 hover:bg-neutral-900 rounded-xl backdrop-blur-3xl' key={result.id}>
         <img
+        onClick={()=>{
+          handleClick({task_id: result.task_id})
+        }}
           className="w-full aspect-square object-cover hover:cursor-pointer hover:scale-105  transition-all duration-200"
           src={result.thumbnail_url}
           alt={`Thumbnail for task ${result.task_id}`}
