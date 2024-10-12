@@ -1,4 +1,4 @@
-import { lazy, useState, startTransition, Suspense } from 'react';
+import { lazy, useState, Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import LoadingDots from '../components/Loader';
 import { XIcon } from 'lucide-react';

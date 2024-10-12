@@ -25,8 +25,9 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      // Add the rule to disable console.logs in production
-      'no-console': isProduction ? 'error' : 'warn', // Error in production, warning in development
+      'no-console': isProduction ? 'error' : 'warn',
+      // 'declared but its value is never read' shitw
+      '@typescript-eslint/no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
     },
   },
 )
