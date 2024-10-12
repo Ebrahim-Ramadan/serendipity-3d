@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 
@@ -11,6 +11,14 @@ function Model({ url }: { url: string }) {
   return <primitive object={scene} />;
 }
 
+/**
+ * A React component that renders a GLB model using react-three-fiber.
+ *
+ * @param {{ modelUrl: string }} props
+ * @prop {string} modelUrl - The URL of the GLB model to render.
+ *
+ * @returns {React.ReactElement} A React component that renders a GLB model.
+ */
 export function GLBViewer({ modelUrl }: { modelUrl: string }) {
   return (
     <div className="w-full h-screen bg-gradient-to-b from-blue-600 to-blue-400 z-10">

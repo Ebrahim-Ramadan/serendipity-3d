@@ -6,6 +6,12 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 const GLBViewer = lazy(() => import('../components/viewer/GLBViewer'));
 
+/**
+ * Validate whether a given string is a valid task ID (in the Trivo sense of the task id)
+ * 
+ * @param {string} taskId The task ID to validate
+ * @returns {boolean} Whether the given task ID is valid
+ */
 const validateTaskId = (taskId : string) => {
   const regex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
   return regex.test(taskId);
@@ -32,6 +38,14 @@ export const ModelSlug = () => {
   const location = useLocation();
   const navigate = useNavigate(); 
 
+  /**
+   * Handles the closing of the modal, by removing the task_id query string and
+   * navigating to the same path without it.
+   * 
+   * @remarks
+   * This function is called when the X button in the top right corner of the
+   * modal is clicked.
+   */
   const handleClick = () => {
     const params = new URLSearchParams(location.search);
     params.delete('task_id'); 
