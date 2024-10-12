@@ -1,3 +1,5 @@
+import { GitFork } from "lucide-react";
+
 interface CreditsProps {
     id: string;
     url: string;
@@ -25,16 +27,22 @@ export const Credits = () => {
         </span>
         <img
         src='/gh-star.png'
-        className='w-6 group-hover:rotate-45 transition-all duration-300'
+        className='w-6 group-hover:rotate-45 transition-all duration-300 group-hover:scale-105'
         />
       </p>
-      <div className='absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent h-28 z-0 right-0'>
+      <div className='absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent h-36 z-0 right-0'>
 
       </div>
      </a>
       
-        <div className="flex flex-col justify-center items-center space-y-2 max-w-md bg-[#0A0A0A] p-4 rounded-xl w-full h-full">
+        <div className="relative flex flex-col justify-center items-center space-y-2 max-w-md bg-[#0A0A0A] px-4 py-3 rounded-xl w-full h-full">
           <p className="font-bold text-xl md:text-3xl alegreya-ass">Credits</p>
+          <a 
+          href='https://github.com/Ebrahim-Ramadan/serendipity-3d'
+          target="_blank"
+          className="absolute top-2 right-2 bg-neutral-900 rounded-lg p-2 group/fork hover:bg-neutral-800 transition-all duration-200">
+            <GitFork size='16' color="#505050" className="group-hover/fork:scale-105 transition-all duration-200"/>
+          </a>
         <div className='flex flex-wrap flex-row gap-4 p-4 w-full'>
         {credits.map((credit) => (
             <a 
@@ -47,6 +55,10 @@ export const Credits = () => {
                 />
             </a>
             ))}
+        </div>
+
+        <div className="absolute bottom-2 w-20 rounded-full right-2 bg-gradient-to-t from-blue-500 to-pink-500 blur-[100px] h-20 z-0 right-0">
+
         </div>
         </div>
         

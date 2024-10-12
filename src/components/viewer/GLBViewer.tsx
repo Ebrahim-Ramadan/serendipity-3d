@@ -22,8 +22,10 @@ function Model({ url }: { url: string }) {
 export function GLBViewer({ modelUrl }: { modelUrl: string }) {
   return (
     <div className="w-full h-screen bg-gradient-to-b from-blue-600 to-blue-400 z-10">
-      <Canvas camera={{ position: [0, 0, 5] }}>
-        <ambientLight intensity={0.5} />
+      <Canvas camera={{ position: [0, 0, 5], fov: 20 }}
+// fov (field of view) property to the camera to control the perspective.
+>
+        <ambientLight intensity={0.7} />
         <pointLight position={[10, 10, 10]} />
         
         <Model url={modelUrl} />

@@ -35,6 +35,7 @@ export const ModelSlug = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const task_id = searchParams.get('task_id');
+  const q = searchParams.get('q') as string;
   const location = useLocation();
   const navigate = useNavigate(); 
 
@@ -49,7 +50,7 @@ export const ModelSlug = () => {
   const handleClick = () => {
     const params = new URLSearchParams(location.search);
     params.delete('task_id'); 
-
+    setIsOpen(false)
     navigate({
       pathname: location.pathname,
       search: params.toString(), 
@@ -63,9 +64,9 @@ export const ModelSlug = () => {
   });
 
   if (isLoading) {
-    return <div className='min-h-screen inset-0 absolute top-0 left-0 flex flex-col bg-black/50 items-center justify-center w-full'>
+    return <div className='min-h-screen inset-0 absolute fixed sticky top-0 left-0 flex flex-col bg-black/50 items-center justify-center w-full'>
     <LoadingDots/>
-                    </div>;
+      </div>;
   }
 
   if (error) {
@@ -73,7 +74,7 @@ export const ModelSlug = () => {
   }
 
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center w-full'>
+    <>
       {task_id ? (
         validateTaskId(task_id) ? (
           <div className={`fixed inset-0 flex justify-center items-center z-50 px-2 ${isOpen ? 'animate-fadeIn' : 'animate-fadeOut'}`}>
@@ -87,6 +88,11 @@ export const ModelSlug = () => {
               <button onClick={handleClick} className='z-20 absolute top-4 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'>
                 <XIcon className="w-4 md:w-6 h-4 md:h-6" />
               </button>
+              {q?.length>0 &&
+              <p className='z-20 absolute top-4 left-4 rounded-lg bg-neutral-200/20 hover:bg-neutral-200/30 w-4 md:w-6 text-xs h-4 md:h-6 flex items-center justify-center'>
+              {q}
+            </p>
+            }
               {isLoading && <p>Loading...</p>}
               {error && <p>Error: {error}</p>}
               {data ? (
@@ -104,7 +110,7 @@ export const ModelSlug = () => {
           'Invalid task_id format'
         )
       ) : null}
-    </div>
+    </>
   );
 };
 
