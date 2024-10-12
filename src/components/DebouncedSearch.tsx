@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import debounce from 'lodash/debounce'
 import { Copy, Search, X } from 'lucide-react'
-import { copyToClipboard } from '~/utils'
+import { copyToClipboard } from '@utils/utils'
 import { toast } from 'sonner'
 import { useLocation, useNavigate } from 'react-router-dom';
 interface ImageResult {

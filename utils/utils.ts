@@ -1,5 +1,5 @@
 
-export const copyToClipboard = async (dataUrl) => {
+export const copyToClipboard = async (dataUrl: string) => {
     try {
       const response = await fetch(dataUrl);
       const blob = await response.blob();
@@ -11,6 +11,7 @@ export const copyToClipboard = async (dataUrl) => {
   
         // Create a promise that resolves when the image is loaded
         await new Promise((resolve) => {
+          // @ts-ignore
           img.onload = () => resolve();
         });
   
@@ -24,6 +25,7 @@ export const copyToClipboard = async (dataUrl) => {
           // Convert the canvas to a PNG blob
           pngBlob = await new Promise((resolve) => {
             canvas.toBlob((blob) => {
+              // @ts-ignore
               resolve(blob);
             }, 'image/png');
           });
