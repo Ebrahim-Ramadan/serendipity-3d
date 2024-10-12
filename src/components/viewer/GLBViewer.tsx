@@ -1,9 +1,7 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import LoadingDots from '../Loader';
 
-// Lazy load OrbitControls
 const LazyOrbitControls = React.lazy(() =>
   import('@react-three/drei').then((module) => ({ default: module.OrbitControls }))
 );

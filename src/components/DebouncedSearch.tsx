@@ -13,12 +13,12 @@ interface ImageResult {
 
 const DEFAULT_DATA = {
   payload: [
-    { id: 1, thumbnail_url: '/default-examples/a.webp', task_id: 'default1' },
-    { id: 2, thumbnail_url: '/default-examples/b.webp', task_id: 'default2' },
-    { id: 3, thumbnail_url: '/default-examples/c.webp', task_id: 'default3' },
-    { id: 4, thumbnail_url: '/default-examples/e.webp', task_id: 'default4' },
-    { id: 5, thumbnail_url: '/default-examples/f.webp', task_id: 'default5' },
-    { id: 6, thumbnail_url: '/default-examples/d.webp', task_id: 'default6' },
+    { id: 1, thumbnail_url: '/default-examples/a.webp', task_id: 'c504afa1-9629-45ee-a80c-7c128b80ce92' },
+    { id: 2, thumbnail_url: '/default-examples/b.webp', task_id: '06e23bcb-b79c-44f6-92fa-10a0b7ebd188' },
+    { id: 3, thumbnail_url: '/default-examples/c.webp', task_id: 'df9e290d-77e1-42d0-8b2d-44b7da500396' },
+    { id: 4, thumbnail_url: '/default-examples/e.webp', task_id: '4326c1ad-bae1-4179-8597-66a00f3c6ff0' },
+    { id: 5, thumbnail_url: '/default-examples/f.webp', task_id: '9e919a9e-b9ad-476d-8eb1-45ea1f8eb410' },
+    { id: 6, thumbnail_url: '/default-examples/d.webp', task_id: 'dec8538c-a78a-4c96-8bdd-2dcf03f21947' },
   ]
 }
 

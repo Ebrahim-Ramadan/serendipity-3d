@@ -6,13 +6,11 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 const GLBViewer = lazy(() => import('../components/viewer/GLBViewer'));
 
-// Function to validate task_id structure
 const validateTaskId = (taskId : string) => {
   const regex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
   return regex.test(taskId);
 };
 
-// Fetch function for React Query
 const fetchModelData = async (taskId : string) => {
   const response = await fetch(`https://api.tripo3d.ai/v2/web/task/${taskId}`, {
     method: 'GET',
@@ -31,16 +29,16 @@ export const ModelSlug = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const task_id = searchParams.get('task_id');
-  const location = useLocation(); // Get the current location
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const location = useLocation();
+  const navigate = useNavigate(); 
 
   const handleClick = () => {
     const params = new URLSearchParams(location.search);
-    params.delete('task_id'); // Delete the 'task_id' parameter
+    params.delete('task_id'); 
 
     navigate({
       pathname: location.pathname,
-      search: params.toString(), // Update the query params in the URL
+      search: params.toString(), 
     });
   };
 
@@ -81,7 +79,7 @@ export const ModelSlug = () => {
                   <LoadingDots/>
                                   </div>
                     }>
-                  <GLBViewer modelUrl={data.data.model} /> {/* Render your component with fetched data */}
+                  <GLBViewer modelUrl={data.data.model} /> 
                 </Suspense>
               ) : null}
             </div>
