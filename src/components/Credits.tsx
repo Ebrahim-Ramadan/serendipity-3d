@@ -36,7 +36,7 @@ export const Credits = () => {
      </a>
       
         <div className="relative flex flex-col justify-center items-center space-y-2 max-w-md bg-[#0A0A0A] px-4 py-3 rounded-xl w-full h-full">
-          <p className="font-bold text-xl md:text-3xl alegreya-ass">Credits</p>
+          <p className="font-bold text-xl md:text-3xl ">Credits</p>
           <a 
           href='https://github.com/Ebrahim-Ramadan/serendipity-3d'
           target="_blank"

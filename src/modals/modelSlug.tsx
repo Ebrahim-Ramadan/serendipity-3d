@@ -89,7 +89,7 @@ export const ModelSlug = () => {
                 <XIcon className="w-4 md:w-6 h-4 md:h-6" />
               </button>
               {q?.length>0 &&
-              <p className='z-20 absolute top-4 left-4 rounded-lg bg-neutral-200/20 hover:bg-neutral-200/30 w-4 md:w-6 text-xs h-4 md:h-6 flex items-center justify-center'>
+              <p className='z-20 absolute top-4 left-4 rounded-lg bg-neutral-200/20 hover:bg-neutral-200/30 px-2 py-1 justify-center text-xs  flex items-center justify-center w-3/4 truncate ellipsis'>
               {q}
             </p>
             }

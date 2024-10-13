@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import debounce from 'lodash/debounce'
-import { Copy, Search, X } from 'lucide-react'
+import { Copy, Search, Upload, X } from 'lucide-react'
 import { copyToClipboard } from '@utils/utils'
 import { toast } from 'sonner'
 import { useLocation, useNavigate } from 'react-router-dom';
+import LoadingDots from './Loader'
 
 interface ImageResult {
   id: number
@@ -33,8 +34,8 @@ export default function DebouncedSearch() {
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [draggedState, setDraggedState] = React.useState<boolean>(false);
 
-  // Extract query from URL on component mount
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const queryParam = params.get('q');
@@ -71,7 +72,7 @@ export default function DebouncedSearch() {
 
     return response.json()
   }
-
+// the normal text-to-objs
   const { data, isLoading, error, refetch } = useQuery<{ payload: ImageResult[] }>({
     queryKey: ['search', debouncedSearchTerm],
     queryFn: () => fetchData(debouncedSearchTerm),
@@ -122,6 +123,61 @@ export default function DebouncedSearch() {
     });
   }
 
+
+  const handleInputFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // @ts-ignore
+      handleImagesUpload(file);
+    }
+  };
+  const handleImagesUpload = (event: { file: File }) => {
+    const file = event.file;
+  
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast.info('Please select an image file.');
+        return;
+      }
+  
+      const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSizeInBytes) {
+        toast.info('File size exceeds 2MB. Please upload a smaller file.');
+        return;
+      }
+  
+      console.log('Selected image file:', file);
+    }
+  };
+  
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDraggedState(false); // Reset dragging state
+  
+    const files = event.dataTransfer.files;
+    if (files && files.length > 0) {
+      if (files.length > 1) {
+        toast.info('Only one image file is being processed.');
+      }
+      
+      const file = files[0];
+      handleImagesUpload({ file });
+    }
+  };
+  
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    setDraggedState(true); 
+    event.preventDefault();
+    event.stopPropagation();
+  };
+  
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    setDraggedState(false); 
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const renderContent = () => {
     if (!debouncedSearchTerm && isInitialLoad) {
       return DEFAULT_DATA.payload.map((result) => (
@@ -166,24 +222,49 @@ export default function DebouncedSearch() {
 
   return (
     <div className="w-full max-w-7xl mx-auto  md:py-24 py-12 sm:px-6 lg:px-8 z-0">
-      <div className='sticky top-14 fixed z-50 bg-neutral-950 mt-6'>
-        <div className="relative mb-4 ">
+      <div className={`sticky top-14 fixed z-50 rounded-lg  mt-6 backdrop-blur-3xl ${draggedState ? 'bg-neutral-900' : 'bg-neutral-950 '}`}>
+        <div className={`relative mb-4 `}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}>
           <input
             type="text"
             autoFocus
             placeholder="Start Typing a keyword..."
             value={searchTerm}
             onChange={handleInputChange}
-            className="w-full rounded-lg border-2 px-10 py-2 text-sm text-white placeholder:text-neutral-500 border-neutral-800 focus:border-neutral-500 focus:outline-none bg-neutral-950 backdrop-blur-3xl"
+            className={`w-full rounded-lg border-2 px-10 py-2 text-sm text-white placeholder:text-neutral-500 border-neutral-800 focus:border-neutral-500 focus:outline-none bg-transparent ${draggedState && ' border-blue-500 transition-all duration-300 '}`}
           />
           {searchTerm.trim().length > 0 &&
             <button
               onClick={handleClearSearch}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-300 p-2"
+              className="absolute right-10 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-300 p-2 bg-neutral-950"
             >
               <X size={16} />
             </button>
           }
+          <div className="absolute right-10 top-1/2 transform -translate-y-1/2 text-neutral-300 w-0.5 h-6 bg-neutral-800" /
+          >
+          {/* the vertical spacer */}
+
+          <label
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-300 hover:text-neutral-200 cursor-pointer"
+          >
+            {isLoading?
+<LoadingDots/>
+:
+<>
+<Upload size={20} className={`${draggedState&& 'scale-110 transition-all duration-300 '}`}/>
+            <input
+              type="file"
+              onChange={handleInputFileChange}
+              accept="image/*"
+              className='hidden'
+            />
+            </>
+}
+            
+        </label>
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-300" size={20} />
         </div>
       </div>
