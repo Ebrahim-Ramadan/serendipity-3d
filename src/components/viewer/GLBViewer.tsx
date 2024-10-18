@@ -40,7 +40,7 @@ export function GLBViewer({ modelUrl }: { modelUrl: string }) {
     <div className="w-full h-screen bg-gradient-to-b from-blue-600 to-blue-400 z-10 relative">
       <button
         onClick={() => setUntextured(!untextured)}
-        className="absolute bottom-36 md:bottom-20 left-4 z-50 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center"
+        className="absolute bottom-36 md:bottom-24 left-4 z-50 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center"
       >
         {untextured ? 
         <svg width="16" height="16" viewBox="0 0 18 18" fill="white" xmlns="http://www.w3.org/2000/svg">

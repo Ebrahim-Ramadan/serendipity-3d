@@ -98,12 +98,12 @@ export const ModelSlug = () => {
             <button 
               onClick={handleDownload} 
               disabled={DownloadStarted}
-              className='z-20 absolute bottom-2.5 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'
+              className='z-20 absolute bottom-4 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'
             >
               <Download className="w-5 h-5 " />
             </button>
           ) : (
-            <div className='z-20 absolute bottom-2.5 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'>
+            <div className='z-20 absolute bottom-4 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'>
             <LoadingDots/>
               </div>
           )
