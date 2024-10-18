@@ -35,6 +35,8 @@ export const ModelSlug = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log('Task ID:', task_id);  // Debugging task_id
+
   const handleClick = () => {
     const params = new URLSearchParams(location.search);
     params.delete('task_id');
@@ -60,39 +62,25 @@ export const ModelSlug = () => {
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          
-          const urlObj = new URL(data.data.model);
-          const pathSegments = urlObj.pathname.split('/');
-          let filename = pathSegments[pathSegments.length - 1];
-          
-          filename = filename.split('?')[0];
-          
-          if (!filename.toLowerCase().endsWith('.glb')) {
-            filename += '.glb';
-          }
-          
+          let filename = new URL(data.data.model).pathname.split('/').pop()?.split('?')[0] || 'model.glb';
+          if (!filename.endsWith('.glb')) filename += '.glb';
           link.download = filename;
-          
           document.body.appendChild(link);
           link.click();
-        setDownloadStarted(false);
           link.remove();
           setTimeout(() => window.URL.revokeObjectURL(url), 100);
-          
         })
         .catch(error => {
           console.error('Download failed:', error);
-        setDownloadStarted(false);
           toast.error('Download failed');
-        });
-
+        })
+        .finally(() => setDownloadStarted(false));
     }
   }, [data]);
 
   if (!task_id || !validateTaskId(task_id)) {
-    return <p>Invalid or missing task ID</p>;
+    return null;
   }
-
   return (
     <div className={`fixed inset-0 flex justify-center items-center z-50 px-2 ${isOpen ? 'animate-fadeIn' : 'animate-fadeOut'}`}>
       <div
@@ -110,12 +98,12 @@ export const ModelSlug = () => {
             <button 
               onClick={handleDownload} 
               disabled={DownloadStarted}
-              className='z-20 absolute bottom-4 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'
+              className='z-20 absolute bottom-2.5 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'
             >
               <Download className="w-5 h-5 " />
             </button>
           ) : (
-            <div className='z-20 absolute bottom-4 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'>
+            <div className='z-20 absolute bottom-2.5 right-4 rounded-full bg-neutral-200/20 hover:bg-neutral-200/30 w-6 md:w-8 h-6 md:h-8 flex items-center justify-center'>
             <LoadingDots/>
               </div>
           )

@@ -2,7 +2,6 @@ import React, { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { BadgeDollarSign, BatteryFull } from 'lucide-react';
 
 const LazyOrbitControls = React.lazy(() =>
   import('@react-three/drei').then((module) => ({ default: module.OrbitControls }))
