@@ -13,7 +13,7 @@ function App() {
         <div className="z-50 opacity-10 fixed  w-[250px] h-[250px] bg-neutral-100/50 z-[-1] blur-[150px] top-0 bottom-0 left-0 right-0 m-auto rounded-full"></div>
         <div
           style={{
-            backgroundImage: 'url("/favicon-removebg-preview.png")', // Replace with your image path
+            backgroundImage: 'url("/favicon-removebg-preview.png")', 
       
           }}
           className="bg-center bg-no-repeat h-screen inset-0 absolute fixed blur-[50px] w-full">

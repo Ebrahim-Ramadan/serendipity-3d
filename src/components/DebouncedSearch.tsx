@@ -222,6 +222,10 @@ export default function DebouncedSearch() {
 
   return (
     <div className="w-full max-w-7xl mx-auto  md:py-24 py-12 sm:px-6 lg:px-8 z-0">
+      <div className='flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-backdrop-blur-3xl bg-neutral-95/10 rounded-xl py-4 px-4'>
+        <p className='text-2xl md:text-5xl font-bold text-neutral-300'>Good Night</p>
+        <p className='text-lg md:text-3xl font-medium leading-5 text-neutral-200'>This is Serendipity, the Dumpest genAI ever exists</p>
+      </div>
       <div className={`sticky top-14 fixed z-50 rounded-lg  mt-6 backdrop-blur-3xl ${draggedState ? 'bg-neutral-900' : 'bg-neutral-950 '}`}>
         <div className={`relative mb-4 `}
         onDrop={handleDrop}
