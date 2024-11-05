@@ -132,21 +132,23 @@ export default function DebouncedSearch() {
     }
   };
   const handleImagesUpload = (event: { file: File }) => {
-    const file = event.file;
-  
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        toast.info('Please select an image file.');
+    console.log('event', event);
+    
+    if (event) {
+      // @ts-ignore
+      if (!event.type.startsWith('image/')) {
+        toast.info('Please select an image event.');
         return;
       }
   
       const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
-      if (file.size > maxSizeInBytes) {
+      // @ts-ignore
+      if (event.size > maxSizeInBytes) {
         toast.info('File size exceeds 2MB. Please upload a smaller file.');
         return;
       }
   
-      console.log('Selected image file:', file);
+      console.log('Selected image file:', event);
     }
   };
   
@@ -224,7 +226,7 @@ export default function DebouncedSearch() {
     <div className="w-full max-w-7xl mx-auto  md:py-24 py-12 sm:px-6 lg:px-8 z-0">
       <div className='flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-backdrop-blur-3xl bg-neutral-95/10 rounded-xl py-4 px-4'>
         <p className='text-2xl md:text-5xl font-bold text-neutral-300'>Good Night</p>
-        <p className='text-lg md:text-3xl font-medium leading-5 text-neutral-200'>This is Serendipity, the Dumpest genAI ever exists</p>
+        <p className='text-lg md:text-3xl font-medium leading-5 text-neutral-200'>This is Serendipity, The Dumpest genAI ever exists</p>
       </div>
       <div className={`sticky top-14 fixed z-50 rounded-lg  mt-6 backdrop-blur-3xl ${draggedState ? 'bg-neutral-900' : 'bg-neutral-950 '}`}>
         <div className={`relative mb-4 `}
